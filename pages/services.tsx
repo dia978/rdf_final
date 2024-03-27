@@ -1,7 +1,7 @@
+import RootLayout from '@/components/Layout'
+import React from 'react'
 
-import RootLayout from "@/components/Layout";
-
-export default function Home() {
+export default function services() {
   return (
     <RootLayout>
       <main className="h-[80vh]">
@@ -10,5 +10,5 @@ export default function Home() {
         </section>
       </main>
     </RootLayout>
-  );
+  )
 }
