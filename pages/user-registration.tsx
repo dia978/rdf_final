@@ -13,7 +13,7 @@ export default function UserRegistration() {
         backgroundPosition: "top",
       }}
     >
-      <section className="md:w-[80%] sm:w-[80%] mt-28 py-12 flex justify-center">
+      <section className="md:w-[80%] sm:w-[80%] py-12 flex justify-center">
         <div className="w-3/4 rounded shadow-xl border p-4">
           <h2 className="text-center text-primary md:mb-6 sm:mb-4 font-bold uppercase">
             Application Portal

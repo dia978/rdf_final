@@ -14,7 +14,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (!email) {
     return res.status(400).json({ message: 'Email is required' });
   }
-  console.log(email)
   try {
     await connectDB.connect();
 
@@ -34,10 +33,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     user.resetTokenExpiration = new Date(expirationTime);
     await user.save();
 
+    const resetLink = `http://greenhillsacademy.rw:8082/reset-password?token=${resetToken}`;
+    const userName = user.name;
+
+
     await sendEmail({
       to: email,
       subject: 'Password Reset Instructions',
-      text: `To reset your password, please click on the following link within 1 hour: http://localhost:3000/reset-password?token=${resetToken}`,
+      text: `Dear ${userName},\n\nTo reset your password, please click on the following link within 1 hour:\n${resetLink}\n\nBest Regards,\nRDF Recruitment Team`,
+      html: `
+        <div style="text-align: center;">
+          <p>Dear ${userName},</p>
+          <p>To reset your password, please click on the following link within 1 hour:</p>
+          <p><a href="${resetLink}">${resetLink}</a></p>
+          <p>Best Regards,<br>RDF Recruitment Team</p>
+        </div>
+      `,
     });
 
     return res.status(200).json({ success: true, message: 'Password reset instructions sent successfully' });

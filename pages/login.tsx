@@ -24,10 +24,17 @@ export default function Login() {
   return (
     <RootLayout>
       <main>
-      <Toaster position="top-center" reverseOrder={false} />
+        <Toaster position="top-center" reverseOrder={false} />
         <div className="w-full h-screen grid place-items-center">
           <div className="md:w-1/2 p-28 bg-white shadow-xl">
-            <div className="mb-8 rounded-[32px] py-8 bg-[#DDF0FF]">
+            <div className="rounded-[32px] py-8">
+              <Link
+                href={"/"}
+                passHref
+                className="text-white flex justify-center items-center rounded-full p-0"
+              >
+                <img src="/logo.png" alt="" className="h-16" />
+              </Link>
               <h2 className="text-center text-primary font-bold">
                 Welcome back!
               </h2>
@@ -35,10 +42,10 @@ export default function Login() {
                 Fill in your credentials
               </p>
             </div>
-            <div className="mt-4">
+            <div className="">
               <p className="mb-3">Email</p>
               <Input
-                placeholder="Email or Username"
+                placeholder="Email"
                 type="text"
                 isDirty={errors.username && touched.username ? true : false}
                 fieldProps={getFieldProps("username")}
@@ -69,7 +76,7 @@ export default function Login() {
             <div className="flex justify-center">
               <button
                 onClick={onSubmit}
-                className="text-center px-4 py-1 text-white capitalize mt-3 bg-primary md:rounded-2xl"
+                className="text-center px-4 py-1 text-white capitalize mt-3 bg-primary md:rounded-xl"
               >
                 {loading ? "Logging in ..." : "Log in"}
               </button>

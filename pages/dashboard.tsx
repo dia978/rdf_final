@@ -12,12 +12,39 @@ import {
   CalendarData,
   CareerData,
 } from "../utils/news&eventData";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const DashboardMain: React.FC = () => {
   const sliderRef = useRef<Slider>(null);
   const [user, setUser] = useState<User>();
   const router = useRouter();
+  const [queries, setQueries] = useState<any>([]);
+  const [exams, setExams] = useState<any>([]);
 
+  useEffect(() => {
+    fetchQueries();
+    fetchExam();
+  }, []);
+
+  const fetchQueries = async () => {
+    try {
+      const response = await axios.get<any>("/api/application");
+      setQueries(response.data);
+    } catch (error) {
+      console.error("Error fetching queries:", error);
+      toast.error("Failed to fetch queries");
+    }
+  };
+  const fetchExam = async () => {
+    try {
+      const response = await axios.get<any>("/api/exam");
+      setExams(response.data);
+    } catch (error) {
+      console.error("Error fetching queries:", error);
+      toast.error("Failed to fetch queries");
+    }
+  };
   const settings = {
     infinite: true,
     slidesToShow: 4,
@@ -94,41 +121,17 @@ const DashboardMain: React.FC = () => {
               key={2}
             >
               <Link
-                href={"/posts"}
+                href={"/examSection"}
                 className="m-4 h-[250px] p-6 flex flex-col justify-between bg-white shadow border rounded-xl"
               >
                 <h3 className="p-2 font-bold bg-[#FFA500]/25 text-[#FFA500] text-center rounded-[5px]">
-                  P
+                  E
                 </h3>
-                <h3 className="font-bold text-center">Posts</h3>
+                <h3 className="font-bold text-center">Exams</h3>
                 <div className="flex justify-between">
                   <div
-                    onClick={() => router.push("")}
+                    onClick={() => router.push("/examSection")}
                     className="text-[#FFA500] font-bold"
-                  >
-                    View More
-                  </div>
-                </div>
-              </Link>
-            </motion.div>
-            <motion.div
-              className="h-full w-full cursor-pointer"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              key={4}
-            >
-              <Link
-                href={"/staff"}
-                className="m-4 h-[250px] p-6 flex flex-col justify-between bg-white shadow border rounded-xl"
-              >
-                <h3 className="p-2 font-bold bg-[#FD620C]/25 text-[#FD620C] text-center rounded-[5px]">
-                  S
-                </h3>
-                <h3 className="font-bold text-center">Staff</h3>
-                <div className="flex justify-between">
-                  <div
-                    onClick={() => router.push("/staff")}
-                    className="text-[#FD620C] font-bold"
                   >
                     View More
                   </div>
@@ -177,67 +180,47 @@ const DashboardMain: React.FC = () => {
         </div>
         <div className="flex justify-between md:gap-20 sm:gap-4 w-full sm:flex-wrap">
           <div className="md:w-1/2 sm:w-full  bg-white rounded-[11px] shadow p-8">
-            <h3 className="font-medium mb-2">Recent News</h3>
+            <h3 className="font-medium mb-2">Recent Applicants</h3>
             <div className="grid p-8 w-full gap-8">
-              {NewsEventData.slice(0, 3).map((event, index) => (
-                <div key={index} className="w-full gap-2 flex pb-2">
-                  <div
-                    className="w-1/3 rounded-xl"
-                    style={{
-                      backgroundImage: `url(${event.imageUrl[0]})`,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                    }}
-                  />
-                  <div className="w-2/3">
-                    <p className="font-bold">{event.title}</p>
-                    <p className="mt-2 text-base font-normal text-justify">
-                      {EventCard(event.description)}
-                    </p>
-                    <div className="flex justify-end">
-                      <motion.button
-                        onClick={() => {
-                          window.location.href = `/news/${event.slug}?tab=events`;
-                        }}
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                        className="border rounded-lg text-primary gap-2 hover:bg-primary hover:text-white text-xs p-2 flex items-center justify-center"
-                      >
-                        view more
-                      </motion.button>
-                    </div>
-                  </div>
+              {queries.slice(0, 3).map((event: any, index: number) => (
+                <div key={index} className="w-full gap-2 grid pb-2">
+                  <p className="font-bold">{event.name}</p>
+                  <p className="">{event.email}</p>
+                  <p className="mt-2 text-base font-normal text-justify">
+                    {event.educationalBackground},{event.contactDetails},
+                    {event.dob}
+                  </p>
+                  <p className="flex">Invitation: {event.sentExam?<div className="text-primary">Sent</div>:<div className="text-[orange]">Waiting</div>}</p>
                 </div>
               ))}
             </div>
           </div>
           <div className="md:w-1/3 sm:w-full flex flex-col gap-8">
             <div>
-              <h3 className="font-medium mb-2">Opening Vacancies</h3>
+              <h3 className="font-medium mb-2">Exam Done</h3>
               <div className="bg-white pb-12 border rounded-xl shadow-xl w-full">
                 <div className="grid p-8 w-full gap-8">
-                  {CareerData.length > 0 ? (
-                    CareerData.map((job: any, index: number) => (
+                  {exams.length > 0 ? (
+                    exams.map((job: any, index: number) => (
                       <div key={index} className="w-full gap-2 flex pb-2">
-                        <div
-                          className="w-1/3 rounded-xl"
-                          style={{
-                            backgroundImage: `url(${job.imageUrl})`,
-                            backgroundSize: "cover",
-                            backgroundPosition: "center",
-                          }}
-                        />
+                       
                         <div className="w-2/3">
-                          <p className="text-sm">{job.type}</p>
-                          <p className="font-bold">{job.title}</p>
+                          <p className="text-sm">attempts:{job.attempts}</p>
+                          <p className="font-bold">{job.email}</p>
                           <p className="mt-2 text-base font-normal text-justify">
-                            {job.posted}
+                          {job.scores.map((i:any, index:number) => (
+                    <div key={index}>
+                      <p>
+                        {i}
+                      </p>
+                    </div>
+                  ))}
                           </p>
                         </div>
                       </div>
                     ))
                   ) : (
-                    <p className="">No vacancies available</p>
+                    <p className="">Still waiting.....</p>
                   )}
                 </div>
               </div>

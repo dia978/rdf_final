@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import Link from "next/link";
@@ -8,7 +9,7 @@ import { scaleRotate as Menu } from "react-burger-menu";
 import { GoHome, GoPeople } from "react-icons/go";
 import { motion } from "framer-motion";
 import { GrGallery } from "react-icons/gr";
-import { BiNews, BiSupport } from "react-icons/bi";
+import { BiLogIn, BiNews, BiSupport } from "react-icons/bi";
 
 export default function Navbar() {
   const router = useRouter();
@@ -70,8 +71,8 @@ export default function Navbar() {
             router.pathname === "/" ? "w-[100%]" : "w-[100%]"
           } flex justify-between items-center md:px-12 py-2`}
         >
-          <Link href={"/"} passHref className="text-white rounded-full p-0">
-            <h4>RDF Recruitment</h4>
+          <Link href={"/"} passHref className="text-white flex items-center rounded-full p-0">
+            <img src="/logo.png" alt="" className="h-12" /><h5>RDF Recruitment</h5>
           </Link>
           <div className="flex sm:hidden items-center md:space-x-8">
             <Link
@@ -90,25 +91,7 @@ export default function Navbar() {
             >
               About&nbsp;us
             </Link>
-            <Link
-              href="/services"
-              className={`${
-                router.pathname === "/services"
-                  ? "border-b-2 border-[yellow]"
-                  : ""
-              } hover:border-[yellow] hover:border-b-2 text-white`}
-            >
-              Services
-            </Link>
 
-            <Link
-              href="/news"
-              className={`${
-                router.pathname === "/news" ? "border-b-2 border-[yellow]" : ""
-              } hover:border-[yellow] hover:border-b-2 text-white`}
-            >
-              News
-            </Link>
             <Link
               href="/user-registration"
               className={`${
@@ -128,6 +111,16 @@ export default function Navbar() {
               } hover:border-[yellow] hover:border-b-2 text-white`}
             >
               Contact&nbsp;Us
+            </Link>
+            <Link
+              href="/login"
+              className={`${
+                router.pathname === "/login"
+                  ? "border-b-2 border-[yellow]"
+                  : "hover:animate-bounce"
+              } px-4 border-[yellow] border-2 text-white`}
+            >
+              Login
             </Link>
           </div>
           <div className="md:hidden flex items-center">
@@ -181,8 +174,8 @@ export default function Navbar() {
                 <GoHome
                   className={` ${
                     router.pathname === "/"
-                      ? "text-[yellow]"
-                      : "text-primary hover:text-[yellow]"
+                      ? "text-primary"
+                      : ""
                   }`}
                 />{" "}
                 HOME
@@ -202,66 +195,29 @@ export default function Navbar() {
                 <GoPeople
                   className={` ${
                     router.pathname === "/about"
-                      ? "text-[yellow]"
-                      : "text-primary hover:text-[yellow]"
+                      ? "text-primary"
+                      : ""
                   }`}
                 />{" "}
                ABOUT
               </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={() => {
-                  window.location.href = "/services";
-                }}
-                className={`group flex gap-2 items-center w-full p-4 text-start ${
-                  router.pathname === "/services"
-                    ? "bg-primary text-[yellow]"
-                    : "bg-second"
-                } hover:bg-primary hover:text-[yellow] text-lg font-medium font-['Outfit'] uppercase`}
-              >
-                <BiNews
-                  className={`group-hover:text-[yellow] ${
-                    router.pathname !== "/services" ? "text-primary" : ""
-                  }`}
-                />
-                SERVICES
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={() => {
-                  window.location.href = "/news";
-                }}
-                className={`group flex gap-2 items-center w-full p-4 text-start ${
-                  router.pathname === "/news"
-                    ? "bg-primary text-[yellow]"
-                    : "bg-second"
-                } hover:bg-primary hover:text-[yellow] text-lg font-medium font-['Outfit'] uppercase`}
-              >
-                <BiNews
-                  className={`group-hover:text-[yellow] ${
-                    router.pathname !== "/admission" ? "text-primary" : ""
-                  }`}
-                />
-                NEWS
-              </motion.button>
+             
 
               <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={() => {
-                  window.location.href = "/user-registration";
+                  window.location.href = "/contact";
                 }}
                 className={`group flex gap-2 items-center w-full p-4 text-start ${
-                  router.pathname === "/user-registration"
+                  router.pathname === "/contact"
                     ? "bg-primary text-[yellow]"
                     : "bg-second"
                 } hover:bg-primary hover:text-[yellow] text-lg font-medium font-['Outfit'] uppercase`}
               >
                 <BiSupport
                   className={`group-hover:text-[yellow] ${
-                    router.pathname !== "/admission" ? "text-primary" : ""
+                    router.pathname !== "/contact" ? "text-primary" : ""
                   }`}
                 />
                 CONTACT US
@@ -284,6 +240,25 @@ export default function Navbar() {
                   }`}
                 />
                 APPLICATION
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={() => {
+                  window.location.href = "/login";
+                }}
+                className={`group flex gap-2 items-center w-full p-4 text-start ${
+                  router.pathname === "/login"
+                    ? "bg-primary text-[yellow]"
+                    : "bg-second"
+                } hover:bg-primary hover:text-[yellow] text-lg font-medium font-['Outfit'] uppercase`}
+              >
+                <BiLogIn
+                  className={`group-hover:text-[yellow] ${
+                    router.pathname !== "/login" ? "text-primary" : ""
+                  }`}
+                />
+                LOGIN
               </motion.button>
             </div>
           </div>

@@ -3,7 +3,7 @@
 import nodemailer from 'nodemailer';
 
 // Function to send email using nodemailer
-const sendEmail = async ({ to, subject, text }) => {
+const sendEmail = async ({ to, subject, text,html }) => {
   try {
     // Create a nodemailer transporter using your Gmail account
     const transporter = nodemailer.createTransport({
@@ -16,10 +16,11 @@ const sendEmail = async ({ to, subject, text }) => {
 
     // Define email options
     const mailOptions = {
-      from: 'it@greenhillsacademy.rw',
+      from: 'it@rdf.rw',
       to,
       subject,
       text,
+      html
     };
 
     // Send email

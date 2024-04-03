@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Dashboard from "../components/dashboard";
+import Dashboard from "@/components/dashboard";
 import Modal from "react-modal";
 import { MdAddCircleOutline } from "react-icons/md";
-import UnauthorizedPage from "../components/UnauthorizedPage";
+import UnauthorizedPage from "@/components/UnauthorizedPage";
 import User from "../types/user";
 import { decodeToken } from "../lib/jwt";
 import axios from "axios";
@@ -421,18 +421,12 @@ const UsersPage = () => {
                     <p className="mb-3">
                       Names<span className="">(Select Staff)</span>
                     </p>
-                    <select
-                      value={selectedStaff}
-                      onChange={handleSelectChange}
+                    <input
+                      name="name"
+                      value={newUser.name}
+                      onChange={handleInputChange}
                       className="border border-gray-400 py-2 px-4 rounded w-full focus:outline-none focus:border-primary"
-                    >
-                      <option value="">none</option>
-                      {staffList.map((staff, index) => (
-                        <option key={index} value={staff.name}>
-                          {staff.name}
-                        </option>
-                      ))}
-                    </select>
+                    />
                   </div>
                   <div className="w-1/2">
                     <p className="mb-3">Email</p>
@@ -441,7 +435,6 @@ const UsersPage = () => {
                       value={newUser.email}
                       onChange={handleInputChange}
                       className="border border-gray-400 py-2 px-4 rounded w-full focus:outline-none focus:border-primary"
-                      disabled
                     />
                   </div>
                 </div>
@@ -453,7 +446,6 @@ const UsersPage = () => {
                       value={newUser.phoneNumber}
                       onChange={handleInputChange}
                       className="border border-gray-400 py-2 px-4 rounded w-full focus:outline-none focus:border-primary"
-                      disabled
                     />
                   </div>
                   <div className="w-1/2">
@@ -463,7 +455,6 @@ const UsersPage = () => {
                       value={newUser.department}
                       onChange={handleInputChange}
                       className="border border-gray-400 py-2 px-4 rounded w-full focus:outline-none focus:border-primary"
-                      disabled
                     />
                   </div>
                 </div>

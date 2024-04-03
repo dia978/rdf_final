@@ -113,13 +113,14 @@ const Dashboard: React.FC<DashboardProps> = ({ user, children }) => {
           isMenuOpen ? "text-opacity-0" : "w-[300px]"
         }`}
       >
-        <div>
+        <div className="mb-20">
           <Link
             href={"/"}
             passHref
             className="my-6 grid place-items-center w-full"
           >
-            <h4>RDF</h4>
+            <img src="/logo.png" alt="" className="h-16" />
+            rdf recruitment
           </Link>
         </div>
         <Link
@@ -133,7 +134,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, children }) => {
           } m-4 px-4 h-[50px] flex items-center gap-4 hover:border-primary hover:border-l-[5px]`}
         >
           {loadingState["/dashboard"] ? (
-            <ClipLoader color={"#018C79"} loading={true} size={20} />
+            <ClipLoader color={"#4b5320"} loading={true} size={20} />
           ) : (
             <img
               loading="lazy"
@@ -145,6 +146,25 @@ const Dashboard: React.FC<DashboardProps> = ({ user, children }) => {
           {isMenuOpen ? null : <p className="text-xl">Dashboard</p>}
         </Link>
         <Link
+          onClick={() => handleLinkClick("/examSection")}
+          href="/examSection"
+          className={`${
+            router.pathname === "/examSection" ? "border-primary border-l-[5px]" : ""
+          } m-4 px-4 h-[50px] flex items-center gap-4 hover:border-primary hover:border-l-[5px]`}
+        >
+          {loadingState["/examSection"] ? (
+            <ClipLoader color={"#4b5320"} loading={true} size={20} />
+          ) : (
+            <img
+              loading="lazy"
+              src="/icons/more_g6utph.svg"
+              alt=""
+              className=""
+            />
+          )}
+          {isMenuOpen ? null : <p className="capitalize">Exams</p>}
+        </Link>
+        <Link
           href="/webpages"
           onClick={() => handleLinkClick("/webpages")}
           className={`${
@@ -154,7 +174,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, children }) => {
           } m-4 px-4 h-[50px] flex items-center gap-4 hover:border-primary hover:border-l-[5px]`}
         >
           {loadingState["/webpages"] ? (
-            <ClipLoader color={"#018C79"} loading={true} size={20} />
+            <ClipLoader color={"#4b5320"} loading={true} size={20} />
           ) : (
             <img
               loading="lazy"
@@ -165,53 +185,16 @@ const Dashboard: React.FC<DashboardProps> = ({ user, children }) => {
           )}
           {isMenuOpen ? null : <p className="capitalize">Application</p>}
         </Link>
+       
         <Link
-          onClick={() => handleLinkClick("/staff")}
-          href="/staff"
+          onClick={() => handleLinkClick("/query")}
+          href="/query"
           className={`${
-            router.pathname === "/staff" ? "border-primary border-l-[5px]" : ""
+            router.pathname === "/query" ? "border-primary border-l-[5px]" : ""
           } m-4 px-4 h-[50px] flex items-center gap-4 hover:border-primary hover:border-l-[5px]`}
         >
-          {loadingState["/staff"] ? (
-            <ClipLoader color={"#018C79"} loading={true} size={20} />
-          ) : (
-            <img
-              loading="lazy"
-              src="/icons/3User_wsbadb.svg"
-              alt=""
-              className=""
-            />
-          )}
-          {isMenuOpen ? null : <p className="capitalize">Staff</p>}
-        </Link>
-        <Link
-          onClick={() => handleLinkClick("/posts")}
-          href="/posts"
-          className={`${
-            router.pathname === "/posts" ? "border-primary border-l-[5px]" : ""
-          } m-4 px-4 h-[50px] flex items-center gap-4 hover:border-primary hover:border-l-[5px]`}
-        >
-          {loadingState["/posts"] ? (
-            <ClipLoader color={"#018C79"} loading={true} size={20} />
-          ) : (
-            <img
-              loading="lazy"
-              src="/icons/posts_fxtzhz.svg"
-              alt=""
-              className=""
-            />
-          )}
-          {isMenuOpen ? null : <p className="capitalize">Posts</p>}
-        </Link>
-        <Link
-          onClick={() => handleLinkClick("/others")}
-          href="/others"
-          className={`${
-            router.pathname === "/others" ? "border-primary border-l-[5px]" : ""
-          } m-4 px-4 h-[50px] flex items-center gap-4 hover:border-primary hover:border-l-[5px]`}
-        >
-          {loadingState["/others"] ? (
-            <ClipLoader color={"#018C79"} loading={true} size={20} />
+          {loadingState["/query"] ? (
+            <ClipLoader color={"#4b5320"} loading={true} size={20} />
           ) : (
             <img
               loading="lazy"
@@ -234,7 +217,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, children }) => {
             } m-4 px-4 h-[50px] flex items-center gap-4 hover:border-primary hover:border-l-[5px]`}
           >
             {loadingState["/users"] ? (
-              <ClipLoader color={"#018C79"} loading={true} size={20} />
+              <ClipLoader color={"#4b5320"} loading={true} size={20} />
             ) : (
               <img
                 loading="lazy"
@@ -256,7 +239,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, children }) => {
           } m-4 px-4 h-[50px] flex items-center gap-4 hover:border-primary hover:border-l-[5px]`}
         >
           {loadingState["/profile"] ? (
-            <ClipLoader color={"#018C79"} loading={true} size={20} />
+            <ClipLoader color={"#4b5320"} loading={true} size={20} />
           ) : (
             <img
               loading="lazy"
@@ -274,7 +257,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, children }) => {
           } m-4 px-4 h-[50px] flex items-center gap-4 hover:border-primary hover:border-l-[5px]`}
         >
          {loadingState['/webpages'] ? (
-            <ClipLoader color={'#018C79'} loading={true} size={20} />
+            <ClipLoader color={'#4b5320'} loading={true} size={20} />
           ) : ( <img                       loading="lazy"src="/icons/settings.svg" alt="" className="" />)}
           {isMenuOpen ? null : <p className="capitalize">Settings</p>}
         </Link> */}

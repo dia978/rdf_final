@@ -13,6 +13,7 @@ export default function Query() {
   const itemsPerPage: number = 10;
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [queries, setQueries] = useState<any>([]);
+  const [loadingStates, setLoadingStates] = useState<any>({});
 
   useEffect(() => {
     const token = localStorage.getItem("user_session");
@@ -30,6 +31,15 @@ export default function Query() {
     try {
       const response = await axios.get<any>("/api/application");
       setQueries(response.data);
+      // Initialize loading states for each query item
+      const initialLoadingStates = response.data.reduce(
+        (acc: any, query: any) => {
+          acc[query._id] = false;
+          return acc;
+        },
+        {}
+      );
+      setLoadingStates(initialLoadingStates);
     } catch (error) {
       console.error("Error fetching queries:", error);
       toast.error("Failed to fetch queries");
@@ -71,7 +81,29 @@ export default function Query() {
       toast.error("Failed to delete query");
     }
   };
+  const [loading, setLoading] = useState(false);
 
+  const handleSubmit = async (
+    e: React.FormEvent,
+    id: string,
+    email: string
+  ) => {
+    e.preventDefault();
+    // Set loading state for the current item to true
+    setLoadingStates((prevState: any) => ({ ...prevState, [id]: true }));
+    try {
+      const response = await axios.post("/api/send-exam", { email });
+      toast.success(response.data.message);
+    } catch (error) {
+      console.error("Error sending password reset request:", error);
+      toast.error(
+        "An error occurred while processing your request. Please try again later."
+      );
+    } finally {
+      // Set loading state for the current item back to false
+      setLoadingStates((prevState: any) => ({ ...prevState, [id]: false }));
+    }
+  };
   return (
     <Dashboard>
       <div className="overflow-x-auto my-8 bg-white p-8 rounded-xl shadow-xl">
@@ -94,71 +126,12 @@ export default function Query() {
             {currentItems.map(
               (
                 item: {
-                  name:
-                    | string
-                    | number
-                    | boolean
-                    | React.ReactElement<
-                        any,
-                        string | React.JSXElementConstructor<any>
-                      >
-                    | Iterable<React.ReactNode>
-                    | React.ReactPortal
-                    | Promise<React.AwaitedReactNode>
-                    | null
-                    | undefined;
-                  email:
-                    | string
-                    | number
-                    | boolean
-                    | React.ReactElement<
-                        any,
-                        string | React.JSXElementConstructor<any>
-                      >
-                    | Iterable<React.ReactNode>
-                    | React.ReactPortal
-                    | Promise<React.AwaitedReactNode>
-                    | null
-                    | undefined;
-                  dob:
-                    | string
-                    | number
-                    | boolean
-                    | React.ReactElement<
-                        any,
-                        string | React.JSXElementConstructor<any>
-                      >
-                    | Iterable<React.ReactNode>
-                    | React.ReactPortal
-                    | Promise<React.AwaitedReactNode>
-                    | null
-                    | undefined;
-                  contactDetails:
-                    | string
-                    | number
-                    | boolean
-                    | React.ReactElement<
-                        any,
-                        string | React.JSXElementConstructor<any>
-                      >
-                    | Iterable<React.ReactNode>
-                    | React.ReactPortal
-                    | Promise<React.AwaitedReactNode>
-                    | null
-                    | undefined;
-                  educationalBackground:
-                    | string
-                    | number
-                    | boolean
-                    | React.ReactElement<
-                        any,
-                        string | React.JSXElementConstructor<any>
-                      >
-                    | Iterable<React.ReactNode>
-                    | React.ReactPortal
-                    | Promise<React.AwaitedReactNode>
-                    | null
-                    | undefined;
+                  sentExam: boolean;
+                  name: string;
+                  email: string;
+                  dob: string;
+                  contactDetails: string;
+                  educationalBackground: string;
                   _id: string;
                 },
                 index: number
@@ -171,14 +144,21 @@ export default function Query() {
                     <Link href="">{item.email}</Link>
                   </td>
                   <td className="border-b border-gray-400 p-2">
-                   <p className="text-sm">DOB: {item.dob}</p> 
-                   <p className="text-sm">Phone: {item.contactDetails}</p>
+                    <p className="text-sm">DOB: {item.dob}</p>
+                    <p className="text-sm">Phone: {item.contactDetails}</p>
                   </td>
                   <td className="border-b border-gray-400 p-2">
                     {item.educationalBackground}
                   </td>
 
                   <td className="border-b border-gray-400 p-2">
+                    {item.sentExam?<div>Sent</div>:<button
+                      onClick={(e) => handleSubmit(e, item._id, item.email)}
+                      disabled={loading} // Disable the button when loading is true
+                      className="p-2 bg-[orange] rounded-xl"
+                    >
+                      {loading ? "Sending..." : "Send Exam"}
+                    </button>}
                     {user?.permissions
                       .map((permission: string) => permission.toLowerCase())
                       .includes("edit".toLowerCase()) && (

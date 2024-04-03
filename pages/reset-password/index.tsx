@@ -10,7 +10,7 @@ export default function ResetPasswordPage() {
   const { token } = router.query;
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
-console.log(token)
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {

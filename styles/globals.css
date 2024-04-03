@@ -192,7 +192,7 @@ h4 {
 
 button:hover {
   color: #fff;
-  background-color: #018c79;
+  background-color: #4b5320;
 }
 
 /* Default styles for links */
@@ -210,7 +210,7 @@ textarea {
   width: 100%;
   padding: 0.4vw;
   border-radius: 0.5vw;
-  border: 0.1vw solid #018c79;
+  border: 0.1vw solid #4b5320;
   display: inline-flex;
   justify-content: flex-start;
   align-items: flex-start;
@@ -221,7 +221,7 @@ textarea {
 input:focus,
 select:focus,
 textarea:focus {
-  border-color: #018c79;
+  border-color: #4b5320;
 }
 
 /* Card.css */
@@ -234,7 +234,7 @@ textarea:focus {
 
 .card {
   position: relative;
-  background-color: #018c79;
+  background-color: #4b5320;
   height: 100%;
   padding: 3px;
   border-radius: 8px;
@@ -265,7 +265,7 @@ textarea:focus {
   display: inline-block;
   font-size: 1rem;
   color: #fff;
-  background: #018c79;
+  background: #4b5320;
   padding: 0.6rem 1.2rem;
   border-radius: 30px;
   margin-bottom: 0.5rem;
@@ -285,7 +285,7 @@ textarea:focus {
 
 .cardReason {
   position: relative;
-  background-color: #018c79;
+  background-color: #4b5320;
   height: 50vh;
   padding: 2px;
   border-radius: 8px;
@@ -314,7 +314,7 @@ textarea:focus {
   display: inline-block;
   font-size: 1rem;
   color: #fff;
-  background: #018c79;
+  background: #4b5320;
   padding: 0.6rem 1.2rem;
   border-radius: 30px;
   margin-bottom: 0.5rem;
@@ -335,7 +335,7 @@ textarea:focus {
 
 .cardButton {
   position: relative;
-  background-color: #018c79;
+  background-color: #4b5320;
   height: 20vh;
   padding: 3px;
   border-radius: 8px;
@@ -347,14 +347,14 @@ textarea:focus {
   height: 100%;
   background: linear-gradient(
     0deg,
-    #018c79 1%,
+    #4b5320 1%,
     rgba(17, 17, 17, 0.06) 99%
   ) !important; /* Use !important to override default hover color */
 }
 
 .cardButton.active .overlay {
   height: 100%;
-  background: linear-gradient(0deg, #018c79 1%, rgba(17, 17, 17, 0.06) 99%);
+  background: linear-gradient(0deg, #4b5320 1%, rgba(17, 17, 17, 0.06) 99%);
 }
 
 .cardButton .text {
@@ -370,7 +370,7 @@ textarea:focus {
   display: inline-block;
   font-size: 1rem;
   color: #fff;
-  background: #018c79;
+  background: #4b5320;
   padding: 0.6rem 1.2rem;
   border-radius: 30px;
   margin-bottom: 0.5rem;
@@ -692,10 +692,10 @@ textarea:focus {
 }
 
 .line-indicator li.slick-active {
-  background: #018c79;
+  background: #4b5320;
 }
 .buttons {
-  background: #018c79 !important;
+  background: #4b5320 !important;
   color: #d7de27 !important;
   transition: 700ms;
 }
@@ -723,7 +723,7 @@ textarea:focus {
 
 .bgButtons {
   background: white !important;
-  color: #018c79 !important;
+  color: #4b5320 !important;
   transition: 700ms;
 }
 .bgButtons:hover {
