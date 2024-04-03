@@ -4,6 +4,8 @@ import connectDB from '../../utils/db';
 import User from '../../Models/User';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  await connectDB.connect();
+  
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method Not Allowed' });
   }
@@ -15,7 +17,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    await connectDB.connect();
+  
 
     const user = await User.findOne({ resetToken: token });
 
