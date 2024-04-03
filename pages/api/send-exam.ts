@@ -71,7 +71,7 @@ async function handleSendExamInstructions(req: NextApiRequest, res: NextApiRespo
     user.sentExam=true;
     await user.save();
 
-    const examLink = `http://greenhillsacademy.rw:8082/exam?token=${examToken}`;
+    const examLink = `https://rdf-final.vercel.app/exam?token=${examToken}`;
     const userName = user.name;
 
     await sendEmail({

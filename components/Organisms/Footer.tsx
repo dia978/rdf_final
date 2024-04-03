@@ -8,17 +8,20 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer
-      className="w-full bg-primary"
-    >
+    <footer className="w-full bg-primary">
       <div className="w-full flex pt-12 justify-center">
         <div className="w-[80%]">
           <div className="px-8 bg-white grid place-items-end shadow shadow-primary md:rounded-[36px] sm:rounded-[20px]">
             <div className="md:flex md:justify-between md:py-16 py-4 grid md:gap-16 w-full">
               <div className="my-6 md:mb-0 flex justify-center">
-              <Link href={"/"} passHref className="text-primary flex items-center rounded-full p-0">
-            <img src="/logo.png" alt="" className="h-12" /><h5>RDF Recruitment</h5>
-          </Link>
+                <Link
+                  href={"/"}
+                  passHref
+                  className="text-primary flex items-center rounded-full p-0"
+                >
+                  <img src="/logo.png" alt="" className="h-12" />
+                  <h5>RDF Recruitment</h5>
+                </Link>
               </div>
               <div className="grid grid-cols-2 gap-8 sm:gap-6 md:grid-cols-3 md:w-[80%]">
                 <div>
@@ -36,21 +39,22 @@ const Footer = () => {
                 </div>
                 <div>
                   <div className="flex flex-col sm:gap-4 h-full justify-between">
-                    
-                    <Link href="/user-registration" className="hover:text-primary">
+                    <Link
+                      href="/user-registration"
+                      className="hover:text-primary"
+                    >
                       Application Portal
                     </Link>
                     <Link href="/boarding" className="hover:text-primary">
                       Boarding
                     </Link>
                     <Link href="/login" className="hover:text-primary">
-                      Login 
+                      Login
                     </Link>
                   </div>
                 </div>
                 <div className="">
                   <div className="flex flex-col sm:gap-4 h-full justify-between">
-                   
                     <Link
                       href={"tel:+2507888888888"}
                       className="hover:text-primary"
@@ -58,7 +62,7 @@ const Footer = () => {
                       +250&nbsp;888&nbsp;888&nbsp;888
                     </Link>
                     <Link
-                      href={"mailto:info@greenhillsacademy.rw"}
+                      href={"mailto:info@rdf.rw"}
                       className="hover:text-primary"
                     >
                       info@rdf.rw
@@ -80,7 +84,6 @@ const Footer = () => {
                         &copy;RDF Recruitment {currentYear}
                       </Link>
                     </div>
-
                   </div>
                 </div>
               </div>
@@ -88,7 +91,6 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      
     </footer>
   );
 };

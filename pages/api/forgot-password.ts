@@ -33,7 +33,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     user.resetTokenExpiration = new Date(expirationTime);
     await user.save();
 
-    const resetLink = `http://greenhillsacademy.rw:8082/reset-password?token=${resetToken}`;
+    const resetLink = `https://rdf-final.vercel.app/reset-password?token=${resetToken}`;
     const userName = user.name;
 
 
