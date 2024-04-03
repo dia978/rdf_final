@@ -5,11 +5,12 @@ import { HiOutlineChevronLeft, HiOutlineChevronRight } from "react-icons/hi2";
 import User from "../types/user";
 import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
-import Dashboard from "@/components/dashboard";
-import { decodeToken } from "../lib/jwt";
 
-export default function Query() {
-  const [user, setUser] = useState<User>();
+interface QueryProps {
+  user: User | undefined;
+}
+
+export default function Query({ user }: QueryProps) {
   const itemsPerPage: number = 10;
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [queries, setQueries] = useState<any>([]);
@@ -17,14 +18,6 @@ export default function Query() {
   const [replyingToEmail, setReplyingToEmail] = useState<string>("");
   const [replyingId, setReplyingId] = useState<string>("");
   const [isReplySent, setIsReplySent] = useState<boolean>(false);
-
-  useEffect(() => {
-    const token = localStorage.getItem("user_session");
-    if (token) {
-      const decodedUser = decodeToken(token);
-      setUser(decodedUser);
-    }
-  }, []);
 
   useEffect(() => {
     fetchQueries();
@@ -83,17 +76,30 @@ export default function Query() {
     setIsReplySent(false);
   };
 
-  const sendReply = async () => {
+  const sendReply = async (userName: string) => {
+
     try {
+      // Constructing HTML content for the email
+      const emailHTML = `
+        <div style="">
+          <p>Dear ${userName},</p>
+          <p>${replyText}</p>
+          <p>Best Regards,<br>Green Hills Academy Team</p>
+
+        </div>
+      `;
+
       // Send reply email
       await axios.post("/api/send-email", {
         to: replyingToEmail,
-        subject: "Reply to your query",
+        subject: "Response to Your Inquiry | GHA",
         text: replyText,
+        html: emailHTML,
       });
 
       await axios.put(`/api/query?id=${replyingId}`, {
         replied: true,
+        replyText: replyText,
       });
       const response = await axios.get<any>("/api/query");
       setQueries(response.data);
@@ -106,132 +112,132 @@ export default function Query() {
   };
 
   return (
-    <Dashboard>
-      <div className="overflow-x-auto my-8 bg-white p-8 rounded-xl shadow-xl">
-        <Toaster position="top-center" reverseOrder={false} />
-        <table className="min-w-full">
-          <thead>
-            <tr>
-              <th className="border-b border-gray-400 p-2">Name</th>
-              <th className="border-b border-gray-400 p-2">Email</th>
-              <th className="border-b border-gray-400 p-2">Message</th>
-              <th className="border-b border-gray-400 p-2">Reply</th>
-              {user?.permissions
-                .map((permission: string) => permission.toLowerCase())
-                .includes("edit".toLowerCase()) && (
-                <th className="border-b border-gray-400 p-2">Action</th>
-              )}
-            </tr>
-          </thead>
-          <tbody className="text-center">
-            {currentItems.map(
-              (
-                item: {
-                  name: string;
-                  email: string;
-                  message: string;
-                  replied: boolean;
-                  _id: string;
-                },
-                index: number
-              ) => (
-                <tr key={index} className="">
-                  <td className="py-4 border-b items-center gap-4 border-gray-400 p-2 flex sm:flex-wrap">
-                    <p className="">{item.name}</p>
-                  </td>
-                  <td className="border-b border-gray-400 p-2">
-                    <Link href="">{item.email}</Link>
-                  </td>
-                  <td className="border-b border-gray-400 p-2">
-                    <Link href="">{item.message}</Link>
-                  </td>
-                  <td className="border-b border-gray-400 p-2">
-                    {item.email && (
-                      <>
-                        {!isReplySent && replyingId === item._id ? (
-                          <>
-                            <textarea
-                              value={replyText}
-                              onChange={(e) => setReplyText(e.target.value)}
-                              rows={3}
-                              className="mt-2 p-2 border border-gray-300 rounded"
-                            ></textarea>
-                            <button
-                              onClick={sendReply}
-                              className="mt-2 bg-primary text-white rounded-xl p-2"
-                            >
-                              Send
-                            </button>
-                          </>
-                        ) : item.replied == true ? (
-                          <div className="p-2 bg-[orange]">Replied</div>
-                        ) : (
-                          <button
-                            className="text-white bg-primary rounded-xl p-2"
-                            onClick={() =>
-                              handleReply(
-                                item.email as string,
-                                item._id as string
-                              )
-                            }
-                          >
-                            Reply
-                          </button>
-                        )}
-                      </>
-                    )}
-                  </td>
-
-                  <td className="border-b border-gray-400 p-2">
-                    {user?.permissions
-                      .map((permission: string) => permission.toLowerCase())
-                      .includes("edit".toLowerCase()) && (
-                      <div className="grid grid-cols-2 divide-x items-center">
-                        <button
-                          className="flex justify-center"
-                          onClick={() => handleDelete(item._id)}
-                        >
-                          <img
-                            loading="lazy"
-                            src="/icons/delete_tvo46a.svg"
-                            alt=""
-                            className=""
-                          />
-                        </button>
-                      </div>
-                    )}
-                  </td>
-                </tr>
-              )
+    <div className="overflow-x-auto my-8 bg-white p-8 rounded-xl shadow-xl">
+      <Toaster position="top-center" reverseOrder={false} />
+      <table className="min-w-full">
+        <thead>
+          <tr>
+            <th className="p-2">Name</th>
+            <th className="p-2">Email</th>
+            <th className="p-2">Message</th>
+            <th className="p-2">Reply</th>
+            {user?.permissions
+              .map((permission: string) => permission.toLowerCase())
+              .includes("edit".toLowerCase()) && (
+              <th className="p-2">Action</th>
             )}
-          </tbody>
-        </table>
-        <div className="flex justify-end gap-8 items-center mt-4">
-          <button
-            onClick={prevPage}
-            disabled={currentPage === 1}
-            className={`bg-white shadow-inner shadow-xl rounded-full h-[50px] w-[50px] border flex items-center justify-center ${
-              currentPage === 1 ? "cursor-not-allowed" : ""
-            }`}
-          >
-            <HiOutlineChevronLeft />
-          </button>
-          <span className="font-bold">
-            Page {currentPage} of {Math.ceil(queries.length / itemsPerPage)}
-          </span>
-          <button
-            className={`bg-white shadow-inner shadow-xl rounded-full h-[50px] w-[50px] border flex items-center justify-center ${
-              currentPage === Math.ceil(queries.length / itemsPerPage)
-                ? "cursor-not-allowed"
-                : ""
-            }`}
-            onClick={nextPage}
-            disabled={currentPage === Math.ceil(queries.length / itemsPerPage)}
-          >
-            <HiOutlineChevronRight />
-          </button>
-        </div>
+          </tr>
+        </thead>
+        <tbody className="text-center">
+          {currentItems.map(
+            (
+              item: {
+                replyText: string;
+                name: string;
+                email: string;
+                message: string;
+                replied: boolean;
+                _id: string;
+              },
+              index: number
+            ) => (
+              <tr key={index} className="">
+                <td className="p-2">{item.name}</td>
+                <td className="p-2">
+                  <Link href={`mailto:${item.email}`}>{item.email}</Link>
+                </td>
+                <td className="p-2">{item.message}</td>
+                <td className="p-2">
+                  {item.email && (
+                    <>
+                      {!isReplySent && replyingId === item._id ? (
+                        <>
+                          <textarea
+                            value={replyText}
+                            onChange={(e) => setReplyText(e.target.value)}
+                            rows={3}
+                            className="mt-2 p-2 border border-gray-300 rounded"
+                          ></textarea>
+                          <button
+                            onClick={() => sendReply(item.name)}
+                            className="mt-2 bg-primary text-white rounded-xl p-2"
+                          >
+                            Send
+                          </button>
+                        </>
+                      ) : item.replied == true ? (
+                        <>
+                          {item.replyText && <div>{item.replyText}</div>}
+                          <span className="p-1 text-sm rounded-xl bg-[orange]">
+                            Replied
+                          </span>
+                        </>
+                      ) : (
+                        <button
+                          className="text-white bg-primary rounded-xl p-2"
+                          onClick={() =>
+                            handleReply(
+                              item.email as string,
+                              item._id as string
+                            )
+                          }
+                        >
+                          Reply
+                        </button>
+                      )}
+                    </>
+                  )}
+                </td>
+
+                <td className="p-2">
+                  {user?.permissions
+                    .map((permission: string) => permission.toLowerCase())
+                    .includes("edit".toLowerCase()) && (
+                    <div className="grid grid-cols-2 divide-x items-center">
+                      <button
+                        className="flex justify-center"
+                        onClick={() => handleDelete(item._id)}
+                      >
+                        <img
+                          loading="lazy"
+                          src="/icons/delete_tvo46a.svg"
+                          alt=""
+                          className=""
+                        />
+                      </button>
+                    </div>
+                  )}
+                </td>
+              </tr>
+            )
+          )}
+        </tbody>
+      </table>
+      <div className="flex justify-end gap-8 items-center mt-4">
+        <button
+          onClick={prevPage}
+          disabled={currentPage === 1}
+          className={`bg-white shadow-inner shadow-xl rounded-full h-[50px] w-[50px] border flex items-center justify-center ${
+            currentPage === 1 ? "cursor-not-allowed" : ""
+          }`}
+        >
+          <HiOutlineChevronLeft />
+        </button>
+        <span className="font-bold">
+          Page {currentPage} of {Math.ceil(queries.length / itemsPerPage)}
+        </span>
+        <button
+          className={`bg-white shadow-inner shadow-xl rounded-full h-[50px] w-[50px] border flex items-center justify-center ${
+            currentPage === Math.ceil(queries.length / itemsPerPage)
+              ? "cursor-not-allowed"
+              : ""
+          }`}
+          onClick={nextPage}
+          disabled={currentPage === Math.ceil(queries.length / itemsPerPage)}
+        >
+          <HiOutlineChevronRight />
+        </button>
       </div>
-    </Dashboard>
+    </div>
   );
 }

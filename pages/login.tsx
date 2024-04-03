@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Input from "../components/Atoms/Input";
