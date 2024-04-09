@@ -5,6 +5,7 @@ import { HiOutlineChevronLeft, HiOutlineChevronRight } from "react-icons/hi2";
 import User from "../types/user";
 import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
+import Dashboard from "@/components/dashboard";
 
 interface QueryProps {
   user: User | undefined;
@@ -112,6 +113,7 @@ export default function Query({ user }: QueryProps) {
   };
 
   return (
+    <Dashboard>
     <div className="overflow-x-auto my-8 bg-white p-8 rounded-xl shadow-xl">
       <Toaster position="top-center" reverseOrder={false} />
       <table className="min-w-full">
@@ -239,5 +241,6 @@ export default function Query({ user }: QueryProps) {
         </button>
       </div>
     </div>
+    </Dashboard>
   );
 }
