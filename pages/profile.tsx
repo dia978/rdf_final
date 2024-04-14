@@ -201,7 +201,7 @@ const ProfilePage = () => {
                 <img
                   src={
                     profile ||
-                    "https://greenhillsacademy.rw:8081/images/profile_wumtxt.png"
+                    "/images/profile.png"
                   }
                   alt=""
                   className="rounded-full w-[80px] h-[80px]"

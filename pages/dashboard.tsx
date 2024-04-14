@@ -7,11 +7,6 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { decodeToken } from "../lib/jwt";
 import User from "../types/user";
-import {
-  NewsEventData,
-  CalendarData,
-  CareerData,
-} from "../utils/news&eventData";
 import axios from "axios";
 import toast from "react-hot-toast";
 

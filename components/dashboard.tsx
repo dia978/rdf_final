@@ -286,7 +286,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, children }) => {
                   <img
                     src={
                       user?.profilePicture ||
-                      "https://greenhillsacademy.rw:8081/images/profile_wumtxt.png"
+                      "/images/profile.png"
                     }
                     alt=""
                     className="rounded-full w-[55px] h-[55px]"
@@ -334,7 +334,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, children }) => {
               property="og:description"
               content="Your website description here"
             />
-            <meta property="og:url" content="https://greenhillsacademy.rw" />
+            <meta property="og:url" content="https://rdf-final.vercel.app/" />
             {/* Add more Open Graph meta tags as needed */}
 
             {/* Twitter meta tags */}

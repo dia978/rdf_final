@@ -53,7 +53,7 @@ const PaginatedTable = ({ user, users, onDelete, onUpdate }: UserProps) => {
             <tr key={index} className="">
               <td className="py-4 border-b items-center gap-4 border-gray-400 p-2 flex sm:flex-wrap">
                 <img
-                  src="https://greenhillsacademy.rw:8081/images/1_hcjnfu.jpg"
+                  src="/images/profile.png"
                   alt=""
                   className="rounded-full w-[55px] h-[55px]"
                 />
