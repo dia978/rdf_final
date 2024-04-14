@@ -165,7 +165,7 @@ export default function ExamSection() {
           <button
             onClick={prevPage}
             disabled={currentPage === 1}
-            className={`bg-white shadow-inner shadow-xl rounded-full h-[50px] w-[50px] border flex items-center justify-center ${
+            className={`bg-white shadow-inner rounded-full h-[50px] w-[50px] border flex items-center justify-center ${
               currentPage === 1 ? "cursor-not-allowed" : ""
             }`}
           >
@@ -175,7 +175,7 @@ export default function ExamSection() {
             Page {currentPage} of {Math.ceil(queries.length / itemsPerPage)}
           </span>
           <button
-            className={`bg-white shadow-inner shadow-xl rounded-full h-[50px] w-[50px] border flex items-center justify-center ${
+            className={`bg-white shadow-inner rounded-full h-[50px] w-[50px] border flex items-center justify-center ${
               currentPage === Math.ceil(queries.length / itemsPerPage)
                 ? "cursor-not-allowed"
                 : ""
