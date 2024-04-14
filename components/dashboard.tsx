@@ -120,7 +120,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, children }) => {
             className="my-6 grid place-items-center w-full"
           >
             <img src="/logo.png" alt="" className="h-16" />
-            rdf recruitment
+            RDF recruitment
           </Link>
         </div>
         <Link
