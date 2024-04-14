@@ -113,8 +113,6 @@ export default function ExamSection() {
           <thead>
             <tr>
               <th className="p-2">Email</th>
-              <th className="p-2">Attempts</th>
-              <th className="p-2">Answers</th>
               <th className="p-2">Score(s)</th>
               {user?.permissions
                 .map((permission: string) => permission.toLowerCase())
@@ -128,17 +126,6 @@ export default function ExamSection() {
               <tr key={index} className="">
                 <td className="p-2">
                   <Link href={`mailto:${item.email}`}>{item.email}</Link>
-                </td>
-                <td className="p-2 text-center">{item.attempts + 1}</td>
-                <td className="p-2">
-                  {item.answers &&
-                    Object.keys(item.answers).map((question, index) => (
-                      <div key={index}>
-                        <p>
-                          {question}: {item.answers[question]}
-                        </p>
-                      </div>
-                    ))}
                 </td>
 
                 <td className="p-2 text-center">

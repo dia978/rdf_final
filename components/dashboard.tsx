@@ -146,25 +146,6 @@ const Dashboard: React.FC<DashboardProps> = ({ user, children }) => {
           {isMenuOpen ? null : <p className="text-xl">Dashboard</p>}
         </Link>
         <Link
-          onClick={() => handleLinkClick("/examSection")}
-          href="/examSection"
-          className={`${
-            router.pathname === "/examSection" ? "border-primary border-l-[5px]" : ""
-          } m-4 px-4 h-[50px] flex items-center gap-4 hover:border-primary hover:border-l-[5px]`}
-        >
-          {loadingState["/examSection"] ? (
-            <ClipLoader color={"#4b5320"} loading={true} size={20} />
-          ) : (
-            <img
-              loading="lazy"
-              src="/icons/more_g6utph.svg"
-              alt=""
-              className=""
-            />
-          )}
-          {isMenuOpen ? null : <p className="capitalize">Exams</p>}
-        </Link>
-        <Link
           href="/webpages"
           onClick={() => handleLinkClick("/webpages")}
           className={`${
@@ -185,6 +166,26 @@ const Dashboard: React.FC<DashboardProps> = ({ user, children }) => {
           )}
           {isMenuOpen ? null : <p className="capitalize">Application</p>}
         </Link>
+        <Link
+          onClick={() => handleLinkClick("/examSection")}
+          href="/examSection"
+          className={`${
+            router.pathname === "/examSection" ? "border-primary border-l-[5px]" : ""
+          } m-4 px-4 h-[50px] flex items-center gap-4 hover:border-primary hover:border-l-[5px]`}
+        >
+          {loadingState["/examSection"] ? (
+            <ClipLoader color={"#4b5320"} loading={true} size={20} />
+          ) : (
+            <img
+              loading="lazy"
+              src="/icons/more_g6utph.svg"
+              alt=""
+              className=""
+            />
+          )}
+          {isMenuOpen ? null : <p className="capitalize">Exams</p>}
+        </Link>
+        
        
         <Link
           onClick={() => handleLinkClick("/query")}
