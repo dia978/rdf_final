@@ -35,20 +35,29 @@ function UserRegistrationForm() {
       setLoading(true);
       const schema = Yup.object().shape({
         name: Yup.string().required("Name is required"),
-        email: Yup.string().email("Invalid email").required("Email is required"),
+        email: Yup.string()
+          .email("Invalid email")
+          .required("Email is required"),
         dob: Yup.string().required("Date of birth is required"),
         contactDetails: Yup.string().required("Contact details are required"),
-        educationalBackground: Yup.string().required("Educational background is required"),
+        educationalBackground: Yup.string().required(
+          "Educational background is required"
+        ),
       });
-  
+
       await schema.validate(formData, { abortEarly: false });
-  
+
       const age = calculateAge(formData.dob);
       if (age < 18) {
         toast.error("You must be at least 18 years old to submit the form");
         return;
       }
-  
+
+      if (age > 26) {
+        toast.error("You must be 26 years old or younger to submit the form");
+        return;
+      }
+
       const response = await fetch("/api/application", {
         method: "POST",
         headers: {
@@ -56,7 +65,7 @@ function UserRegistrationForm() {
         },
         body: JSON.stringify(formData),
       });
-  
+
       if (response.ok) {
         toast.success("Form submitted successfully");
         // Reset form after successful submission
@@ -77,7 +86,6 @@ function UserRegistrationForm() {
       setLoading(false);
     }
   }
-  
 
   function calculateAge(dob: string): number {
     const today = new Date();
@@ -165,9 +173,11 @@ function UserRegistrationForm() {
             whileTap={{ scale: 0.9 }}
             type="submit"
             disabled={loading}
-            className={`border-primary text-primary bg-white border rounded-lg gap-2 hover:bg-primary hover:border-[yellow] hover:text-white sm:text-xs p-2 md:px-4 md:py-2 flex items-center justify-center ${loading ? 'cursor-not-allowed opacity-50' : ''}`}
+            className={`border-primary text-primary bg-white border rounded-lg gap-2 hover:bg-primary hover:border-[yellow] hover:text-white sm:text-xs p-2 md:px-4 md:py-2 flex items-center justify-center ${
+              loading ? "cursor-not-allowed opacity-50" : ""
+            }`}
           >
-            {loading ? 'Submitting...' : 'Submit'}
+            {loading ? "Submitting..." : "Submit"}
           </motion.button>
         </div>
       </form>
