@@ -53,9 +53,9 @@ const RDFRecruitmentForm: React.FC = () => {
   };
 
   useEffect(() => {
-    const savedAttempts = localStorage.getItem("attempts");
+    const savedAttempts = attempts; // Remove localStorage.getItem
     if (savedAttempts) {
-      setAttempts(parseInt(savedAttempts));
+      setAttempts(savedAttempts);
     }
   }, []);
 
@@ -172,15 +172,11 @@ const RDFRecruitmentForm: React.FC = () => {
         }
       }
       setScores((prevScores) => [...prevScores, totalScore]);
-      localStorage.setItem(
-        `answers_attempt_${attempts}`,
-        JSON.stringify(answers)
-      );
-      localStorage.setItem("score_attempt_" + attempts, `${totalScore}`);
+      // Remove localStorage.setItem
       if (totalScore >= 10) {
         setPassed(true);
       }
-      localStorage.setItem("attempts", `${attempts + 1}`);
+      // Remove localStorage.setItem
       setAttempts(attempts + 1);
       setAnswers({});
       setTimer(60);
